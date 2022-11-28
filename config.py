@@ -18,9 +18,5 @@ class ViewCountPerArticle_uri:
         uri = self.base_url + "{}/daily/{}/{}".format(article, start_month_date, end_month_date)
         return uri
 
-# Most View- monthly and weekly
-print(MostViewedArticles_uri().get_url_for_mostview_monthly(10,2))
-print(MostViewedArticles_uri().get_url_for_mostview_weekly(2020,10,2))
 
-# ViewCount weekly or monthly
-print(ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly("Alert Einstein","2020100100","2020103000"))
+    
