@@ -1,5 +1,5 @@
 from fetchurl import fetch_api
-from config import MostViewedArticles_uri, ViewCountPerArticle_uri
+from config import MostViewedArticles_uri, ViewCountPerArticle_uri, AllDaysOfTheWeek
 
 class MostViewedArticles:
 
@@ -7,11 +7,12 @@ class MostViewedArticles:
         month = '0' + str(month) if month<10 else month
         url = MostViewedArticles_uri(). get_url_for_mostview_monthly(year, month)
         #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikisource/all-access/{}/{}/all-days".format(year, month)
-        articles = fetch_api(url)
-        return articles
+        resp = fetch_api(url)
+        all_month_articles  = resp["items"][0]["articles"]
+        return  all_month_articles
 
     def  most_viewed_week(self, year, month, day):
-        dates_of_that_week = get_all_dates_of_the_week(int(year), int(month), int(day))
+        dates_of_that_week = AllDaysOfTheWeek().get_all_dates_of_the_week(int(year), int(month), int(day))
         all_week_articles = []
         for date in dates_of_that_week:
             year = date.year
@@ -19,10 +20,9 @@ class MostViewedArticles:
             day = '0' + str(date.day) if date.day < 10 else date.day
             url = MostViewedArticles_uri().get_url_for_mostview_weekly(year, month, day)
             #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia/all-access/{}/{}/{}".format(year, month, day)
-            articles = fetch_api(url)
-
             try:
-                articles = articles['items'][0]['articles']
+                resp = fetch_api(url)
+                articles = resp['items'][0]['articles']
                 all_week_articles += articles
             except KeyError as e:
                 print((year, month, day))

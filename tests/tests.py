@@ -5,6 +5,8 @@ import unittest, datetime
 
 from fetchurl import fetch_api
 from config import MostViewedArticles_uri, ViewCountPerArticle_uri, AllDaysOfTheWeek
+from views import MostViewedArticles, ViewCounts
+from testData import expected_first_article, expected_second_article, expected_last_article
 
 """ Ensure urls config work as it should """
 class Test_MostViewedArticles_uri(unittest.TestCase):
@@ -46,6 +48,36 @@ class Test_RetrieveAllWeekDaysInTheDaysWeek(unittest.TestCase):
         self.assertListEqual(actual_end_week_result,  expected_result)
         self.assertListEqual(actual_mid_week_result,  expected_result)
         self.assertListEqual(actual_start_week_result,  expected_result)
+
+class Test_MostViewedArticles_View(unittest.TestCase):
+    def test_most_viewed_month(self):
+        all_month_articles = MostViewedArticles().most_viewed_month(2015,10)
+
+        first_article = all_month_articles[0]
+        second_article = all_month_articles[1]
+        last_article = all_month_articles[-1]
+        
+        self.assertTrue(first_article, expected_first_article)
+        self.assertTrue(second_article, expected_second_article)
+        self.assertTrue(last_article, expected_last_article)
+
+    def test_most_viewed_weekly(self):
+        all_week_articles = MostViewedArticles().most_viewed_week(2015, 10, 10)
+        num_of_articles = len(all_week_articles)
+        expected_num_of_articles = 6664
+        self.assertTrue(num_of_articles, expected_num_of_articles)
+
+class Test_ViewCounts_View(unittest.TestCase):
+    def test_monthly_viewcount_of_specific_article(article, year, month):
+        pass
+     
+        
+
+
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
