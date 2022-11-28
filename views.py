@@ -30,7 +30,6 @@ class MostViewedArticles:
        
         return all_week_articles
 
-
 class ViewCounts:
 
     def monthly_viewcount_of_specific_article(self, article, year, month):
@@ -74,7 +73,6 @@ class ViewCounts:
 
         return articles
       
-
 class DayofMonthWhenArticleHasMostPageViews:
     """
     Assumptions: user can specify the month and year , article can be any(user cares about the count)

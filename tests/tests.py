@@ -82,7 +82,6 @@ class Test_ViewCounts_View(unittest.TestCase):
         self.assertTrue(num_of_counts, expected_counts) 
         self.assertTrue(view_counts[0], expected_viewcounts_first_article_weekly)
 
-     
 class Test_DayofMonthWhenArticleHasMostPageViews(unittest.TestCase):
     def test_day_with_most_view_article(self):
         resp  = DayofMonthWhenArticleHasMostPageViews().day_with_most_viewed_article(2015, 10)
