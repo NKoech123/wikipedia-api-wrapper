@@ -7,7 +7,6 @@ class MostViewedArticles:
     def most_viewed_month(self, year, month):
         month = '0' + str(month) if month<10 else month
         url = MostViewedArticles_uri(). get_url_for_mostview_monthly(year, month)
-        #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikisource/all-access/{}/{}/all-days".format(year, month)
         resp = fetch_api(url)
         all_month_articles  = resp["items"][0]["articles"]
         return  all_month_articles
@@ -20,7 +19,6 @@ class MostViewedArticles:
             month = '0' + str(date.month) if date.month < 10 else date.month
             day = '0' + str(date.day) if date.day < 10 else date.day
             url = MostViewedArticles_uri().get_url_for_mostview_weekly(year, month, day)
-            #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia/all-access/{}/{}/{}".format(year, month, day)
             try:
                 resp = fetch_api(url)
                 articles = resp['items'][0]['articles']
@@ -44,9 +42,8 @@ class ViewCounts:
     
         try:
             url = ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
-            #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_month_date, end_month_date)
-            articles = fetch_api(url)
-            articles = articles['items']
+            resp = fetch_api(url)
+            articles = resp['items']
         except KeyError as e:
             print(e)
 
