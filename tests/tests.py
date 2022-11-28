@@ -6,7 +6,7 @@ import unittest, datetime
 from fetchurl import fetch_api
 from config import MostViewedArticles_uri, ViewCountPerArticle_uri, AllDaysOfTheWeek
 from views import MostViewedArticles, ViewCounts
-from testData import expected_first_article, expected_second_article, expected_last_article, expected_viewcounts_first_article_monthly 
+from testData import expected_first_article, expected_second_article, expected_last_article, expected_viewcounts_first_article_monthly, expected_viewcounts_first_article_weekly
 
 """ Ensure urls config work as it should """
 class Test_MostViewedArticles_uri(unittest.TestCase):
@@ -73,7 +73,15 @@ class Test_ViewCounts_View(unittest.TestCase):
         num_of_counts = len(view_counts)
         expected_counts = 31
         self.assertTrue(num_of_counts, expected_counts) 
-        self.assertTrue(view_counts[0], expected_viewcounts_first_article_monthly ) 
+        self.assertTrue(view_counts[0], expected_viewcounts_first_article_monthly) 
+
+    def test_weekly_viewcount_of_specific_article(self):
+        view_counts = ViewCounts().weekly_viewcount_of_specific_article('Johann_Wolfgang_von_Goethe', 2022, 11, 9)
+        num_of_counts = len(view_counts)
+        expected_counts = 7
+        self.assertTrue(num_of_counts, expected_counts) 
+        self.assertTrue(view_counts[0], expected_viewcounts_first_article_weekly)
+
      
         
 

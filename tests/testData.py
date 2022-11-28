@@ -27,3 +27,12 @@ expected_viewcounts_first_article_monthly = {
       "agent": "all-agents",
       "views": 18860
     },
+expected_viewcounts_first_article_weekly =     {
+      "project": "en.wikipedia",
+      "article": "Johann_Wolfgang_von_Goethe",
+      "granularity": "daily",
+      "timestamp": "2022110700",
+      "access": "all-access",
+      "agent": "all-agents",
+      "views": 2670
+    }

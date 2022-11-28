@@ -53,25 +53,25 @@ class ViewCounts:
         return articles
 
     def weekly_viewcount_of_specific_article(self, article, year, month, day):
-        dates_of_that_week = get_all_dates_of_the_week(int(year), int(month), int(day))
+        dates_of_that_week = AllDaysOfTheWeek().get_all_dates_of_the_week(int(year), int(month), int(day))
      
-        start_week_date =  dates_of_that_week[0]
-        year = start_week_date.year
-        month = '0' + str(start_week_date.month) if start_week_date.month < 10 else start_week_date.month
-        day = '0' + str(start_week_date.day) if start_week_date.day < 10 else start_week_date.day
-        start_month_date = str(year) + str(month) + str(day) + '00'
-
+        start_week =  dates_of_that_week[0]
         end_week =  dates_of_that_week[-1]
-    
+
+        year = start_week.year
+        month = '0' + str(start_week.month) if start_week.month < 10 else start_week.month
+        day = '0' + str(start_week.day) if start_week.day < 10 else start_week.day
+        start_week_date = str(year) + str(month) + str(day) + '00'
+
         year = end_week.year
         month = '0' + str(end_week.month) if end_week.month < 10 else end_week.month
         day = '0' + str(end_week .day) if end_week.day < 10 else end_week.day
-
-        end_month_date =  str(year) + str(month) + str(day) + '00'
-        
+        end_week_date =  str(year) + str(month) + str(day) + '00'
+       
         try:
-            url = ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
-            #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_month_date, end_month_date)
+            #url = ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
+            url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_week_date, end_week_date )
+            print(url)
             articles = fetch_api(url)
             articles = articles['items']
         except KeyError as e:
@@ -105,4 +105,6 @@ class DayofMonthWhenArticleHasMostPageViews:
                 max_views, idx = article['views'], index
               
         return  articles[idx]
+
+
 
