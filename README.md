@@ -1,26 +1,34 @@
-# grow
-Fully tested REST API (Express.js, Sequelize-ORM, Chai ) that consumes banking transactions and calculates the amount of users’ carbon footprint based on the category (e.g food, transport, good and services) of transactions made by a user and other factors like diet (being vegan, vegetarian etc). Endpoint features include footprint of all users, of a specific user and footprint per day.
-
+# Grow
+Create a wrapper API around the Wikipedia API that allows users to do the
+following:
+- Retrieve a list of the most viewed articles for a week or a month (You can get the
+most viewed articles for a day and their view count. To calculate the most articles
+for a week or month, you can assume that an article that is listed for one day but
+not listed for another day has 0 views when it’s not listed)
+- For any given article, be able to get the view count of that specific article for a
+week or a month
+- Retrieve the day of the month where an article got the most page views
 
 There are three endpoints:
 
-* `/` which just returns the JSON object `{ server_status: 'working' }`
-* `/dataFromExternalFinancialSources` hit it to run data from financial institutions
-* `/transactions` which returns a list of banking transactions including the estimated carbon emission amounts
-* `/footprint` returns all users' footprint
-* `/footprintPerDay` returns all users' footprint per Day
+* `/api/v1/mostviewedpermonth/<year>/<month>` 
+* `/api/v1/mostviewedperweek/<year>/<month>/<day>` 
+* `/api/v1/viewcountperarticle/monthly/<article>/<year>/<month>`
+* `/api/v1/viewcountperarticle/weekly/<article>/<year>/<month>/<day>`
+* `/api/v1/daywithmostviews/monthly/<year>/<month>` 
 
-The transactions are stored in the `transactions` table, and each transaction belongs to a user, stored in the `user` table. The `models/` directory contains the [Sequelize](https://sequelize.org) models that access those tables. The `footprintCalculator.js` file contains the basic service functions that connect those models with the simple routes in `app.js`. Tests live in the `tests/` directory.
 
 ## Set up
-
-* Make sure you have `sqlite3` installed. It is usually already there in Macs.
-* Run `pip3 install -r requirements.txt`
-* Create the databases by running:
-	* `npx sequelize-cli db:migrate`
-	* `NODE_ENV=test npx sequelize-cli db:migrate`
-* Pre-populate the data with `npx sequelize-cli db:seed:all`
-* Run the tests with `yarn test`
-* Run the server with `yarn dev`
+* Clone the repo `git clone https://github.com/NKoech123/grow.git`
+* Activate virtual env `source env/bin/activate`
+* Start by running `pip3 install -r requirements.txt`
+* To run flask app, `python3 main.py`
+	* feel free to hit the endpoints
+	
+	
+* To run tests, `cd tests` then `python3 tests.py`
 
 <img width="1023" alt="Screenshot 2022-11-28 at 1 19 50 AM" src="https://user-images.githubusercontent.com/84946242/204240203-25855187-d7ec-493a-930e-5372b7fbacc6.png">
+
+<img width="1013" alt="Screenshot 2022-11-28 at 2 25 49 AM" src="https://user-images.githubusercontent.com/84946242/204254726-87282728-76b1-444e-9bb5-a6b27222804e.png">
+
