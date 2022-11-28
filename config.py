@@ -22,12 +22,14 @@ class ViewCountPerArticle_uri:
         return uri
 
 
-"""" 
+"""
 Given any date, we wan't to retrieve all days that fall within that week
 from Monday-Sunday.
-""""
+For instance, 11/07/2022 is on a Sunday, so all dates returned by the method
+will be [11/01/2022, 11/02/2022,...,.,......11/07/2022]
+"""
 class AllDaysOfTheWeek:
-    def get_all_dates_of_the_week(year: int , month: int, day: int):
+    def get_all_dates_of_the_week(self, year: int , month: int, day: int):
     
         date = datetime.date(year, month, day) 
         weekday_of_date_idx = date.weekday()
@@ -41,4 +43,3 @@ class AllDaysOfTheWeek:
             current_date += timedelta(days=1)
             day += 1
         return all_dates_of_that_week
-    

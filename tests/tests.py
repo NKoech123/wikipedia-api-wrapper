@@ -1,10 +1,10 @@
 import sys
 sys.path.append("..")
 
-import unittest
+import unittest, datetime
 
 from fetchurl import fetch_api
-from config import MostViewedArticles_uri, ViewCountPerArticle_uri
+from config import MostViewedArticles_uri, ViewCountPerArticle_uri, AllDaysOfTheWeek
 
 """ Ensure urls config work as it should """
 class Test_MostViewedArticles_uri(unittest.TestCase):
@@ -32,6 +32,20 @@ class Test_FetchAPI(unittest.TestCase):
         expected_result = "Science: Computers"
         self.assertTrue(actual_result, expected_result)
 
+class Test_RetrieveAllWeekDaysInTheDaysWeek(unittest.TestCase):
+    def test_get_all_dates_of_the_week(self):
+        actual_end_week_result = AllDaysOfTheWeek().get_all_dates_of_the_week(2022, 11, 27)
+        actual_mid_week_result = AllDaysOfTheWeek().get_all_dates_of_the_week(2022, 11, 23)
+        actual_start_week_result= AllDaysOfTheWeek().get_all_dates_of_the_week(2022, 11, 21)
+
+        expected_result = [datetime.date(2022, 11, 21), datetime.date(2022, 11, 22), 
+            datetime.date(2022, 11, 23), datetime.date(2022, 11, 24), datetime.date(2022, 11, 25), 
+            datetime.date(2022, 11, 26), datetime.date(2022, 11, 27)
+        ]
+     
+        self.assertListEqual(actual_end_week_result,  expected_result)
+        self.assertListEqual(actual_mid_week_result,  expected_result)
+        self.assertListEqual(actual_start_week_result,  expected_result)
 
 if __name__ == '__main__':
     unittest.main()
