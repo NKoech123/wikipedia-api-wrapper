@@ -1,3 +1,6 @@
+import datetime, calendar
+from datetime import date, timedelta
+
 class MostViewedArticles_uri:
     def __init__(self):
         self.base_url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikisource/all-access/"
@@ -19,4 +22,23 @@ class ViewCountPerArticle_uri:
         return uri
 
 
+"""" 
+Given any date, we wan't to retrieve all days that fall within that week
+from Monday-Sunday.
+""""
+class AllDaysOfTheWeek:
+    def get_all_dates_of_the_week(year: int , month: int, day: int):
+    
+        date = datetime.date(year, month, day) 
+        weekday_of_date_idx = date.weekday()
+        date_at_start_of_week = date-timedelta(days=weekday_of_date_idx)
+
+        all_dates_of_that_week = []
+        current_date = date_at_start_of_week
+        day = 0
+        while day < 7:
+            all_dates_of_that_week.append(current_date)
+            current_date += timedelta(days=1)
+            day += 1
+        return all_dates_of_that_week
     
