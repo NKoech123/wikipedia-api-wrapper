@@ -1,15 +1,24 @@
 import datetime, calendar
 from datetime import date
 from fetchurl import fetch_api
-from config import MostViewedArticles_uri, ViewCountPerArticle_uri, DayofMonthWhenArticleHasMostPageViews_uri, AllDaysOfTheWeek
+from config import (MostViewedArticles_uri, 
+ViewCountPerArticle_uri, 
+DayofMonthWhenArticleHasMostPageViews_uri, 
+AllDaysOfTheWeek )
 
 class MostViewedArticles:
 
     def most_viewed_month(self, year, month):
         month = '0' + str(month) if int(month)<10 else month
         url = MostViewedArticles_uri(). get_url_for_mostview_monthly(year, month)
-        resp = fetch_api(url)
-        all_month_articles  = resp["items"][0]["articles"]
+        try:
+            resp = fetch_api(url)
+        except KeyError as e:
+            print(e)
+        if "items" in resp:
+            all_month_articles  = resp["items"][0]["articles"]
+            return all_month_articles
+        all_month_articles = []
         return  all_month_articles
 
     def  most_viewed_week(self, year, month, day):
@@ -22,12 +31,12 @@ class MostViewedArticles:
             url = MostViewedArticles_uri().get_url_for_mostview_weekly(year, month, day)
             try:
                 resp = fetch_api(url)
+            except KeyError as e:
+                print(e)
+            if "items" in resp:
                 articles = resp['items'][0]['articles']
                 all_week_articles += articles
-            except KeyError as e:
-                print((year, month, day))
-                print(e)
-       
+           
         return all_week_articles
 
 class ViewCounts:
@@ -39,13 +48,15 @@ class ViewCounts:
         start_month_date = str(year) + str(month) + '01' + '00'
         end_month_date =  str(year) + str(month) + str(last_day) + '00'
     
+        url = ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
         try:
-            url = ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
             resp = fetch_api(url)
-            articles = resp['items']
         except KeyError as e:
             print(e)
-
+        articles = []
+        if "items" in resp:
+            articles = resp['items']
+            return articles
         return articles
 
     def weekly_viewcount_of_specific_article(self, article, year, month, day):
@@ -64,13 +75,16 @@ class ViewCounts:
         day = '0' + str(end_week .day) if end_week.day < 10 else end_week.day
         end_week_date =  str(year) + str(month) + str(day) + '00'
        
+        url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_week_date, end_week_date )
         try:
-            url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_week_date, end_week_date )
-            articles = fetch_api(url)
-            articles = articles['items']
+            resp = fetch_api(url)
         except KeyError as e:
             print(e)
 
+        articles = []
+        if "items" in resp:
+            articles = resp['items']
+        
         return articles
       
 class DayofMonthWhenArticleHasMostPageViews:
@@ -85,14 +99,25 @@ class DayofMonthWhenArticleHasMostPageViews:
         start_month_date = str(year) + str(month) + '01' + '00'
         end_month_date =  str(year) + str(month) + str(last_day) + '00'
        
+        url = DayofMonthWhenArticleHasMostPageViews_uri().get_url(start_month_date, end_month_date)
         try:
-            url = DayofMonthWhenArticleHasMostPageViews_uri().get_url(start_month_date, end_month_date)
-            print(url)
             resp = fetch_api(url)
-            articles = resp['items']
         except KeyError as e:
             print(e)
-     
+
+        articles = []
+        if "items" in resp:
+            articles = resp['items']
+        
+        if not articles:
+            date_with_max_views = 0
+            result = { "item": [{
+               "date" : date_with_max_views 
+               }]
+            }
+            return result
+
+        # Now that we have articles in the month, let's retrieve day with most viewed articles
         max_views = 0
         day_with_max_views = 0 
    
@@ -104,8 +129,7 @@ class DayofMonthWhenArticleHasMostPageViews:
         date_with_max_views = "{}-{}-{}".format(year, month, day_with_max_views)
         result = { "item": [{
             "date" : date_with_max_views 
-            }
-          ]
+            }]
         }
         return  result
 
