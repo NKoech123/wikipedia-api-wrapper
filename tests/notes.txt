@@ -1,0 +1,3 @@
+-> Accuracy of data returned
+-> Accuracy of helper function functionality
+-> Validate each function's output
