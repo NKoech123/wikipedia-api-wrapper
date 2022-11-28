@@ -21,6 +21,14 @@ class ViewCountPerArticle_uri:
         uri = self.base_url + "{}/daily/{}/{}".format(article, start_month_date, end_month_date)
         return uri
 
+class DayofMonthWhenArticleHasMostPageViews_uri:
+    def __init__(self):
+        self.base_url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/aggregate/all-projects/all-access/all-agents/daily/"
+
+    def get_url(self, year: int, month: int):
+        uri = self.base_url + "{}/{}".format(year, month)
+        return uri
+
 
 """
 Given any date, we wan't to retrieve all days that fall within that week

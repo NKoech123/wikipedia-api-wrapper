@@ -1,6 +1,7 @@
 import datetime, calendar
+from datetime import date
 from fetchurl import fetch_api
-from config import MostViewedArticles_uri, ViewCountPerArticle_uri, AllDaysOfTheWeek
+from config import MostViewedArticles_uri, ViewCountPerArticle_uri, DayofMonthWhenArticleHasMostPageViews_uri, AllDaysOfTheWeek
 
 class MostViewedArticles:
 
@@ -66,9 +67,7 @@ class ViewCounts:
         end_week_date =  str(year) + str(month) + str(day) + '00'
        
         try:
-            #url = ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
             url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_week_date, end_week_date )
-            print(url)
             articles = fetch_api(url)
             articles = articles['items']
         except KeyError as e:
@@ -78,30 +77,34 @@ class ViewCounts:
       
 
 class DayofMonthWhenArticleHasMostPageViews:
-
-    def day_with_most_view_article(self, article, year, month, day):
+    #Assumptions: user can specify the month and year , article can be any(user cares about the count)
+    #So let's use daily timeseries that spans for a month
+    def day_with_most_viewed_article(self, year, month):
         last_day = calendar.monthrange(int(year), int(month))[1]
         month = '0' + str(month) if int(month) < 10 else month
-        start_month_date = str(year) + str(month) + '01' + '00'
 
+        start_month_date = str(year) + str(month) + '01' + '00'
         end_month_date =  str(year) + str(month) + str(last_day) + '00'
        
         try:
-            url =  ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
+            #url =  ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
             #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_month_date, end_month_date)
-            articles = fetchAPI(url)
-            articles = articles['items']
+            url = DayofMonthWhenArticleHasMostPageViews_uri().get_url(start_month_date, end_month_date)
+            print(url)
+            resp = fetch_api(url)
+            articles = resp['items']
         except KeyError as e:
             print(e)
      
         max_views = 0
-        idx = 0
+        day_with_max_views = 0 
    
-        for index, article in enumerate(articles):
+        for curr_day, article in enumerate(articles):
             if 'views' in article and max_views < article['views']:
-                max_views, idx = article['views'], index
-              
-        return  articles[idx]
+                max_views, day_with_max_views = article['views'], curr_day
+        #since counting starts at 0
+        day_with_max_views+=1
 
-
+        date_with_max_views = date(year, month, day_with_max_views)
+        return   date_with_max_views
 
