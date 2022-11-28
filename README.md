@@ -1,10 +1,7 @@
 # Grow
 Create a wrapper API around the Wikipedia API that allows users to do the
 following:
-- Retrieve a list of the most viewed articles for a week or a month (You can get the
-most viewed articles for a day and their view count. To calculate the most articles
-for a week or month, you can assume that an article that is listed for one day but
-not listed for another day has 0 views when it’s not listed)
+- Retrieve a list of the most viewed articles for a week or a month
 - For any given article, be able to get the view count of that specific article for a
 week or a month
 - Retrieve the day of the month where an article got the most page views
