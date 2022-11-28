@@ -20,9 +20,7 @@ def most_viewed_articles_for_week(year, month, day):
 
 @app.route('/api/v1/viewcountperarticle/monthly/<article>/<year>/<month>')
 def viewcount_of_specific_article_monthly(article, year, month):
-    
     instance = ViewCounts()
-    print(instance)
     viewcount = instance.monthly_viewcount_of_specific_article(article, year, month)
     print(viewcount)
     if len(viewcount) == 0:
@@ -32,7 +30,6 @@ def viewcount_of_specific_article_monthly(article, year, month):
 
 @app.route('/api/v1/viewcountperarticle/weekly/<article>/<year>/<month>/<day>')
 def viewcount_of_specific_article_weekly(article, year, month, day):
-
     instance = ViewCounts()
     viewcount = instance.weekly_viewcount_of_specific_article(article, year, month, day)
     if len(viewcount) == 0:
@@ -41,17 +38,12 @@ def viewcount_of_specific_article_weekly(article, year, month, day):
     print(viewcount)
     return viewcount
 
-@app.route('/api/v1/daywithmostviews/monthly/<article>/<year>/<month>/<day>')
-def day_with_most_article_pageviews(article, year, month, day):
-
+@app.route('/api/v1/daywithmostviews/monthly/<year>/<month>')
+def day_with_most_article_pageviews(year, month):
     instance = DayofMonthWhenArticleHasMostPageViews()
-    day_with_most_pageviews = instance.day_with_most_view_article( article, year, month, day)
-    if len(day_with_most_pageviews) == 0:
-        statement = "No result in that month"
-        return statement
+    day_with_most_pageviews = instance.day_with_most_viewed_article(int(year), int(month))
     return  day_with_most_pageviews
       
-
 
 if __name__ == '__main__':
     app.run(debug=True)

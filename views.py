@@ -101,9 +101,13 @@ class DayofMonthWhenArticleHasMostPageViews:
         for curr_day, article in enumerate(articles):
             if 'views' in article and max_views < article['views']:
                 max_views, day_with_max_views = article['views'], curr_day
-        #since counting starts at 0
-        day_with_max_views+=1
-
-        date_with_max_views = date(year, month, day_with_max_views)
-        return   date_with_max_views
+        
+        day_with_max_views+=1 #since counting starts at 0
+        date_with_max_views = "{}-{}-{}".format(year, month, day_with_max_views)
+        result = { "item": [{
+            "date" : date_with_max_views 
+            }
+          ]
+        }
+        return  result
 

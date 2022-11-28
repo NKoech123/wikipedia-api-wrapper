@@ -85,14 +85,10 @@ class Test_ViewCounts_View(unittest.TestCase):
      
 class Test_DayofMonthWhenArticleHasMostPageViews(unittest.TestCase):
     def test_day_with_most_view_article(self):
-        date_with_max_views  = DayofMonthWhenArticleHasMostPageViews().day_with_most_viewed_article(2015, 10)
+        resp  = DayofMonthWhenArticleHasMostPageViews().day_with_most_viewed_article(2015, 10)
+        date_with_max_views = resp["item"][0]["date"]
         expected_date = '2015-10-06'
         self.assertTrue(date_with_max_views, expected_date)
-
-
-
-
-
 
 
 if __name__ == '__main__':
