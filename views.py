@@ -6,7 +6,7 @@ from config import MostViewedArticles_uri, ViewCountPerArticle_uri, DayofMonthWh
 class MostViewedArticles:
 
     def most_viewed_month(self, year, month):
-        month = '0' + str(month) if month<10 else month
+        month = '0' + str(month) if int(month)<10 else month
         url = MostViewedArticles_uri(). get_url_for_mostview_monthly(year, month)
         resp = fetch_api(url)
         all_month_articles  = resp["items"][0]["articles"]
@@ -27,8 +27,7 @@ class MostViewedArticles:
             except KeyError as e:
                 print((year, month, day))
                 print(e)
-        # return a message if there's no data in the dates
-        # return when dates are invalid
+       
         return all_week_articles
 
 
@@ -77,8 +76,10 @@ class ViewCounts:
       
 
 class DayofMonthWhenArticleHasMostPageViews:
-    #Assumptions: user can specify the month and year , article can be any(user cares about the count)
-    #So let's use daily timeseries that spans for a month
+    """
+    Assumptions: user can specify the month and year , article can be any(user cares about the count)
+    So let's use daily timeseries that spans for a month
+    """
     def day_with_most_viewed_article(self, year, month):
         last_day = calendar.monthrange(int(year), int(month))[1]
         month = '0' + str(month) if int(month) < 10 else month
@@ -87,8 +88,6 @@ class DayofMonthWhenArticleHasMostPageViews:
         end_month_date =  str(year) + str(month) + str(last_day) + '00'
        
         try:
-            #url =  ViewCountPerArticle_uri().get_url_for_viewcount_monthly_or_weekly(article, start_month_date, end_month_date)
-            #url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/{}/daily/{}/{}".format(article, start_month_date, end_month_date)
             url = DayofMonthWhenArticleHasMostPageViews_uri().get_url(start_month_date, end_month_date)
             print(url)
             resp = fetch_api(url)
