@@ -22,3 +22,5 @@ The transactions are stored in the `transactions` table, and each transaction be
 * Pre-populate the data with `npx sequelize-cli db:seed:all`
 * Run the tests with `yarn test`
 * Run the server with `yarn dev`
+
+<img width="1023" alt="Screenshot 2022-11-28 at 1 19 50 AM" src="https://user-images.githubusercontent.com/84946242/204240203-25855187-d7ec-493a-930e-5372b7fbacc6.png">
