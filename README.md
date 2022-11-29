@@ -3,13 +3,13 @@ A wrapper API around the Wikipedia API that allows users to do the
 following:
 - Retrieve a list of the most viewed articles for a week or a month
   - endpoints:
-	  * `/api/v1/mostviewedpermonth/<year>/<month>` 
-	  * `/api/v1/mostviewedperweek/<year>/<month>/<day>` 
+	  * `/api/v1/mostviewedpermonth/<year>/<month>` *(for a specific month)*
+	  * `/api/v1/mostviewedperweek/<year>/<month>/<day>` *(for a specific week)*
 - For any given article, be able to get the view count of that specific article for a
 week or a month
   - endpoints:
-	  * `/api/v1/viewcountperarticle/monthly/<article>/<year>/<month>`
-	  * `/api/v1/viewcountperarticle/weekly/<article>/<year>/<month>/<day>`
+	  * `/api/v1/viewcountperarticle/monthly/<article>/<year>/<month>` *(for a specific month)*
+	  * `/api/v1/viewcountperarticle/weekly/<article>/<year>/<month>/<day>` *(for a specific week)*
   
 - Retrieve the day of the month where an article got the most page views
   - endpoint:
