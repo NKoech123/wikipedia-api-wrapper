@@ -18,7 +18,7 @@ There are three endpoints:
 ## Set up
 * Clone the repo `git clone https://github.com/NKoech123/grow.git`
 * Activate virtual env `source env/bin/activate`
-* Start by running `pip3 install -r requirements.txt`
+* Install dependencies `pip3 install -r requirements.txt`
 * To run flask app, `python3 main.py`
 	* feel free to hit the endpoints
 	
