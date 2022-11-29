@@ -1,5 +1,5 @@
-# Grow
-Create a wrapper API around the Wikipedia API that allows users to do the
+# wikipedia-api-wrapper
+A wrapper API around the Wikipedia API that allows users to do the
 following:
 - Retrieve a list of the most viewed articles for a week or a month
   - endpoints:
