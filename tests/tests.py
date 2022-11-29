@@ -6,7 +6,11 @@ import unittest, datetime
 from fetchurl import fetch_api
 from config import MostViewedArticles_uri, ViewCountPerArticle_uri, AllDaysOfTheWeek
 from views import MostViewedArticles, ViewCounts, DayofMonthWhenArticleHasMostPageViews
-from testData import expected_first_article, expected_second_article, expected_last_article, expected_viewcounts_first_article_monthly, expected_viewcounts_first_article_weekly
+from testData import (expected_first_article, 
+expected_second_article, 
+expected_last_article, 
+expected_viewcounts_first_article_monthly, 
+expected_viewcounts_first_article_weekly)
 
 """ Ensure urls config work as it should """
 class Test_MostViewedArticles_uri(unittest.TestCase):

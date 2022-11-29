@@ -2,7 +2,7 @@ import requests
 import json
 
 def fetch_api(url: str) -> any:
-    headers = {'User-Agent' : 'GrtLit' }
+    headers = {'User-Agent' : 'GrtLit3' }
     try:
         response_api = requests.get(url, headers=headers)
         data = response_api.text
