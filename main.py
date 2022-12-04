@@ -35,7 +35,6 @@ def viewcount_of_specific_article_weekly(article, year, month, day):
     if len(viewcount) == 0:
         statement = "No result during this week"
         viewcount.append(statement)
-    print(viewcount)
     return viewcount
 
 @app.route('/api/v1/daywithmostviews/monthly/<year>/<month>')
