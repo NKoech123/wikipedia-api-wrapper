@@ -1,6 +1,7 @@
-FROM python: 3.10
-WORKDIR /code
-COPY ./requirements.txt /code/requirements.txt
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-COPY ./app /code/app
-CMD ["python3", "main.py", "--host", "0.0.0.0", "--port", "80"]
+FROM python:3.10-alpine
+WORKDIR /app
+RUN pip3 install --upgrade pip
+COPY requirements.txt /app/requirements.txt
+RUN python3 -m pip install -r /app/requirements.txt
+COPY .  /app 
+CMD ["main.py"]
